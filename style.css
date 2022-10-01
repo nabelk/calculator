@@ -1,0 +1,27 @@
+body {
+    min-height: 100vh;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#calculator {
+    display: flex;
+    flex-direction: column;
+    background-color: darkolivegreen;
+    width: 350px; height: 400px;
+    padding: 2.5%;
+
+}
+
+.display {
+    background-color: aquamarine;
+    height: 60px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px;
+    font-size: 60px;
+}
