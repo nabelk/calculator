@@ -13,17 +13,18 @@ body {
     background-color: darkolivegreen;
     width: 350px; height: 400px;
     padding: 1.5%;
+    gap: 5px;
 }
 
 .display {
     background-color: aquamarine;
-    height: 60px;
+    height: 90px;
     width: 300px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding: 20px;
-    font-size: 60px;
+    font-size: 40px;
     border: 2px solid black;
 }
 
