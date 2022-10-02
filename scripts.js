@@ -31,26 +31,20 @@ let operatorPad = document.querySelectorAll(".operator")
 keypad.forEach(pad => {
     pad.addEventListener("click", calculation);
 });
-// operatorPad.forEach(pad => {
-//     pad.addEventListener("click", calculation);
-// });
-
+operatorPad.forEach(pad => {
+    pad.addEventListener("click", calculation);
+});
 
 let firstNum = "";
 let secondNum = "";
 let operator = "";
 
 function calculation(e) {
-    display.textContent = e.target.textContent; 
-
+    display.textContent += e.target.textContent; 
 
     if(operator === ""){
         firstNum += e.target.textContent;
     } else {
         secondNum += e.target.textContent;
     }
-
-
-
-
 }
