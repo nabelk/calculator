@@ -25,12 +25,12 @@ function operate(operatorChoice, num1, num2){
 
 console.log(operate(multiply, 10, 5))
 
-let displayValue = document.querySelector(".display");
+let display = document.querySelector(".display");
 let keypad = document.querySelectorAll(".keypad");
 keypad.forEach(pad => {
-    pad.addEventListener("click", clickPad);
-})
+    pad.addEventListener("click", calculation);
+});
 
-function clickPad(e) {
-   displayValue.textContent = e.target.textContent; 
-};
+function calculation(e) {
+    display.textContent = e.target.textContent; 
+}
