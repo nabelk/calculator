@@ -28,12 +28,15 @@ console.log(operate(multiply, 10, 5))
 let display = document.querySelector(".display");
 let keypad = document.querySelectorAll(".num");
 let operatorPad = document.querySelectorAll(".operator")
+let clear = document.querySelector(".clear");
+
 keypad.forEach(pad => {
     pad.addEventListener("click", calculation);
 });
 operatorPad.forEach(pad => {
     pad.addEventListener("click", calculation);
 });
+clear.addEventListener("click", () => display.textContent = "");
 
 let firstNum = "";
 let secondNum = "";
