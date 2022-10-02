@@ -12,7 +12,7 @@ body {
     align-items: center;
     background-color: darkolivegreen;
     width: 350px; height: 400px;
-    padding: 1%;
+    padding: 1.5%;
 }
 
 .display {
@@ -27,7 +27,7 @@ body {
     border: 2px solid black;
 }
 
-.keypad-container {
+#keypad-container {
     /* display: inline-grid;
     grid-template-rows: repeat(5, 1fr);
     grid-template-columns: repeat(4, 1fr); */
@@ -47,14 +47,14 @@ body {
     height: 55px;
 }
 
-.first-keypad-section {
+#first-keypad-section {
     display: inline-grid;
     grid-template-rows: repeat(4, 1fr);
     grid-template-columns: repeat(4, 1fr);
     width: 340px;
 }
 
-.last-row-keypad {
+#last-row-keypad {
     display: inline-grid;
     grid-template-columns: 1fr 1fr 2fr ;
     width: 340px;
