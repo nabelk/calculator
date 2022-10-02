@@ -26,11 +26,31 @@ function operate(operatorChoice, num1, num2){
 console.log(operate(multiply, 10, 5))
 
 let display = document.querySelector(".display");
-let keypad = document.querySelectorAll(".keypad");
+let keypad = document.querySelectorAll(".num");
+let operatorPad = document.querySelectorAll(".operator")
 keypad.forEach(pad => {
     pad.addEventListener("click", calculation);
 });
+// operatorPad.forEach(pad => {
+//     pad.addEventListener("click", calculation);
+// });
+
+
+let firstNum = "";
+let secondNum = "";
+let operator = "";
 
 function calculation(e) {
     display.textContent = e.target.textContent; 
+
+
+    if(operator === ""){
+        firstNum += e.target.textContent;
+    } else {
+        secondNum += e.target.textContent;
+    }
+
+
+
+
 }
