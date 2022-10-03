@@ -29,14 +29,21 @@ let display = document.querySelector(".display");
 let keypad = document.querySelectorAll(".num");
 let operatorPad = document.querySelectorAll(".operator")
 let clear = document.querySelector(".clear");
+let equal = document.querySelector(".equal");
 
 let firstNum = "";
 let secondNum = "";
 let operator = "";
 
 function calculation() {
-    clear.addEventListener("click", () => display.textContent = "");
-
+    clear.addEventListener("click", () => {
+        display.textContent = ""
+        firstNum = "";
+        secondNum = "";
+        operator = "";
+        console.log(firstNum)
+    });
+    
     keypad.forEach(pad => {
         pad.addEventListener("click", (e) => {
             if(operator === ""){
@@ -45,20 +52,30 @@ function calculation() {
                 console.log(firstNum);
             } else {
                 secondNum += e.target.textContent;
-                display.textContent += secondNum;
+                display.textContent = secondNum;
                 console.log(secondNum);
-
             }
         });
     });
 
     operatorPad.forEach(pad => {
         pad.addEventListener("click", () => { 
-            operator = pad.textContent
-            display.textContent += operator;
-            console.log(operator)
+            operator = pad.getAttribute("data-value");
+            display.textContent += pad.textContent;
+            console.log(operator);
         });
     });
+
+    equal.addEventListener("click", () => {
+        if(operator === "add"){
+            let result = Number(firstNum) + Number(secondNum);
+            console.log(result);
+            display.textContent = result;  
+            firstNum = result;
+            secondNum = "";
+        }
+    })
+
 }
 
 calculation();
