@@ -18,12 +18,9 @@ const divide = (a, b) => {
     return a / b;
 };
 
-// Func. to return the choose operator and numbers
-function operate(operatorChoice, num1, num2){
-    return operatorChoice(num1, num2);
-}
-
-console.log(operate(multiply, 10, 5))
+let firstNum = "";
+let secondNum = "";
+let operator = "";
 
 let display = document.querySelector(".display");
 let keypad = document.querySelectorAll(".num");
@@ -31,11 +28,8 @@ let operatorPad = document.querySelectorAll(".operator")
 let clear = document.querySelector(".clear");
 let equal = document.querySelector(".equal");
 
-let firstNum = "";
-let secondNum = "";
-let operator = "";
-
-function calculation() {
+// Func. to make calculation based on event
+function operate(){
     clear.addEventListener("click", () => {
         display.textContent = ""
         firstNum = "";
@@ -67,17 +61,28 @@ function calculation() {
     });
 
     equal.addEventListener("click", () => {
-        if(operator === "add"){
-            let result = Number(firstNum) + Number(secondNum);
-            console.log(result);
-            display.textContent = result;  
-            firstNum = result;
-            secondNum = "";
+        firstNum = Number(firstNum);
+        secondNum = Number(secondNum);
+        let result;
+        switch(operator){
+            case "add":
+                result = add(firstNum, secondNum);
+                break;
+            case "subtract":
+                result = subtract(firstNum, secondNum);
+                break;
+            case "multiply":
+                result = multiply(firstNum, secondNum);
+                break;   
+            case "divide":
+                result = divide(firstNum, secondNum);
+                break;    
         }
+        console.log(result)
+        display.textContent = result;  
+        firstNum = result;
+        secondNum = "";
     })
-
 }
 
-calculation();
-
-/* display.textContent += e.target.textContent;  */
+operate();
