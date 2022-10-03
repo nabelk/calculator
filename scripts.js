@@ -30,24 +30,37 @@ let keypad = document.querySelectorAll(".num");
 let operatorPad = document.querySelectorAll(".operator")
 let clear = document.querySelector(".clear");
 
-keypad.forEach(pad => {
-    pad.addEventListener("click", calculation);
-});
-operatorPad.forEach(pad => {
-    pad.addEventListener("click", calculation);
-});
-clear.addEventListener("click", () => display.textContent = "");
-
 let firstNum = "";
 let secondNum = "";
 let operator = "";
 
-function calculation(e) {
-    display.textContent += e.target.textContent; 
+function calculation() {
+    clear.addEventListener("click", () => display.textContent = "");
 
-    if(operator === ""){
-        firstNum += e.target.textContent;
-    } else {
-        secondNum += e.target.textContent;
-    }
+    keypad.forEach(pad => {
+        pad.addEventListener("click", (e) => {
+            if(operator === ""){
+                firstNum += e.target.textContent;
+                display.textContent = firstNum;
+                console.log(firstNum);
+            } else {
+                secondNum += e.target.textContent;
+                display.textContent += secondNum;
+                console.log(secondNum);
+
+            }
+        });
+    });
+
+    operatorPad.forEach(pad => {
+        pad.addEventListener("click", () => { 
+            operator = pad.textContent
+            display.textContent += operator;
+            console.log(operator)
+        });
+    });
 }
+
+calculation();
+
+/* display.textContent += e.target.textContent;  */
