@@ -37,16 +37,23 @@ function operate(){
         operator = "";
         console.log(firstNum)
     });
-    
+
     keypad.forEach(pad => {
         pad.addEventListener("click", (e) => {
-            if(operator === ""){
-                firstNum += e.target.textContent;
-                display.textContent = firstNum;
+            if (firstNum === "" && e.target.textContent === "."){
+                display.textContent += "0.";
+                firstNum += "0.";
                 console.log(firstNum);
+            } else if (operator === ""){
+                display.textContent += e.target.textContent;
+                firstNum += e.target.textContent;
+                console.log(firstNum);
+            } else if (secondNum === "" && e.target.textContent === "."){
+                secondNum += "0.";
+                display.textContent += secondNum;
             } else {
+                display.textContent += e.target.textContent;
                 secondNum += e.target.textContent;
-                display.textContent = secondNum;
                 console.log(secondNum);
             }
         });
