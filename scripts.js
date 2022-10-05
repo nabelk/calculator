@@ -36,6 +36,8 @@ let span = document.querySelectorAll("span");
 
 // Func. to make calculation based on event
 function operate(){
+
+    // Clear display event
     clear.addEventListener("click", () => {
         span.forEach(element => element.textContent = "");
         firstNum = "";
@@ -44,12 +46,12 @@ function operate(){
         console.log("new 1st after clear = " + firstNum)
     });
 
+    // Number/dot event
     keypad.forEach(pad => {
         pad.addEventListener("click", (e) => {
             if (firstNum === "" && e.target.textContent === "."){
                 firstNumDisplay.textContent += "0.";
                 firstNum += "0.";
-
             } else if (operator === ""){
                 firstNumDisplay.textContent += e.target.textContent;
                 firstNum += e.target.textContent;
@@ -62,36 +64,58 @@ function operate(){
             }
             console.log("first = " + firstNum)
             console.log("second = " + secondNum)
-        });
-    });
-
-    operatorPad.forEach(pad => {
-        pad.addEventListener("click", () => { 
-            operator = pad.getAttribute("data-value");
-            operatorDisplay.textContent += pad.textContent;
             console.log("operator = " + operator);
         });
     });
 
-    backspace.addEventListener("click", () => {
+    // Operator event
+    operatorPad.forEach(pad => {
+        pad.addEventListener("click", () => { 
+            
+            if(firstNum !== "" && operator !== "" && secondNum === ""){
+                operator = pad.getAttribute("data-value");
+                operatorDisplay.textContent = pad.textContent;
+            } else if((firstNum, secondNum, operator) !== ""){
+                result();
+                operator = pad.getAttribute("data-value");
+                operatorDisplay.textContent = pad.textContent;
+            } else {
+                operator = pad.getAttribute("data-value");
+                operatorDisplay.textContent = pad.textContent;
+            }
+            
+            console.log("first = " + firstNum)
+            console.log("second = " + secondNum)
+            console.log("operator = " + operator);
+        });
+    });
 
-        if (firstNum !== "" && secondNum === ""){
-            operatorDisplay.textContent = "";
-        } 
-        if(operator === ""){
+    // DEL event
+    backspace.addEventListener("click", () => {
+        if(operator === "" && secondNum === "" && firstNum !=="" ){
             firstNum = firstNum.slice(0, -1); 
             firstNumDisplay.textContent = firstNum;
-        } else if (firstNum !== ""){
+        } else if (firstNum !== "" && operator !== "" && secondNum !== ""){
             secondNum = secondNum.slice(0, -1);
             secondNumDisplay.textContent = secondNum;
+        } else if (firstNum !== "" && secondNum === "" && operator !== ""){
+            operatorDisplay.textContent = "";
+            operator = ""
         } 
 
         console.log("first = " + firstNum)
         console.log("second = " + secondNum)
+        console.log("operator = " + operator);
     })
 
+    // '=' event
     equal.addEventListener("click", () => {
-        firstNum = Number(firstNum);
+        result();
+    })
+}
+
+function result() {
+    firstNum = Number(firstNum);
         secondNum = Number(secondNum);
         let result;
         switch(operator){
@@ -114,7 +138,7 @@ function operate(){
         firstNumDisplay.textContent = result;  
         firstNum = result;
         secondNum = "";
-    })
+        console.log("result = " + result)
 }
 
 operate();
