@@ -27,45 +27,68 @@ let keypad = document.querySelectorAll(".num");
 let operatorPad = document.querySelectorAll(".operator")
 let clear = document.querySelector(".clear");
 let equal = document.querySelector(".equal");
+let backspace = document.querySelector(".del")
+
+let firstNumDisplay = document.querySelector(".firstnum");
+let operatorDisplay = document.querySelector(".operator");
+let secondNumDisplay = document.querySelector(".secondnum");
+let span = document.querySelectorAll("span");
 
 // Func. to make calculation based on event
 function operate(){
     clear.addEventListener("click", () => {
-        display.textContent = ""
+        span.forEach(element => element.textContent = "");
         firstNum = "";
         secondNum = "";
         operator = "";
-        console.log(firstNum)
+        console.log("new 1st after clear = " + firstNum)
     });
 
     keypad.forEach(pad => {
         pad.addEventListener("click", (e) => {
             if (firstNum === "" && e.target.textContent === "."){
-                display.textContent += "0.";
+                firstNumDisplay.textContent += "0.";
                 firstNum += "0.";
-                console.log(firstNum);
+
             } else if (operator === ""){
-                display.textContent += e.target.textContent;
+                firstNumDisplay.textContent += e.target.textContent;
                 firstNum += e.target.textContent;
-                console.log(firstNum);
             } else if (secondNum === "" && e.target.textContent === "."){
+                secondNumDisplay.textContent += secondNum;
                 secondNum += "0.";
-                display.textContent += secondNum;
             } else {
-                display.textContent += e.target.textContent;
+                secondNumDisplay.textContent += e.target.textContent;
                 secondNum += e.target.textContent;
-                console.log(secondNum);
             }
+            console.log("first = " + firstNum)
+            console.log("second = " + secondNum)
         });
     });
 
     operatorPad.forEach(pad => {
         pad.addEventListener("click", () => { 
             operator = pad.getAttribute("data-value");
-            display.textContent += pad.textContent;
-            console.log(operator);
+            operatorDisplay.textContent += pad.textContent;
+            console.log("operator = " + operator);
         });
     });
+
+    backspace.addEventListener("click", () => {
+
+        if (firstNum !== "" && secondNum === ""){
+            operatorDisplay.textContent = "";
+        } 
+        if(operator === ""){
+            firstNum = firstNum.slice(0, -1); 
+            firstNumDisplay.textContent = firstNum;
+        } else if (firstNum !== ""){
+            secondNum = secondNum.slice(0, -1);
+            secondNumDisplay.textContent = secondNum;
+        } 
+
+        console.log("first = " + firstNum)
+        console.log("second = " + secondNum)
+    })
 
     equal.addEventListener("click", () => {
         firstNum = Number(firstNum);
@@ -86,7 +109,9 @@ function operate(){
                 break;    
         }
         console.log(result)
-        display.textContent = result;  
+        secondNumDisplay.textContent = "";
+        operatorDisplay.textContent = "";
+        firstNumDisplay.textContent = result;  
         firstNum = result;
         secondNum = "";
     })
