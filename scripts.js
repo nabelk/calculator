@@ -28,6 +28,7 @@ let operatorPad = document.querySelectorAll(".operator")
 let clear = document.querySelector(".clear");
 let equal = document.querySelector(".equal");
 let backspace = document.querySelector(".del")
+const negative = document.querySelector(".negative"); 
 
 let firstNumDisplay = document.querySelector(".firstnum");
 let operatorDisplay = document.querySelector(".operator");
@@ -49,15 +50,18 @@ function operate(){
     // Number/dot event
     keypad.forEach(pad => {
         pad.addEventListener("click", (e) => {
-            if (firstNum === "" && e.target.textContent === "."){
+            if ((secondNum === "-"  ) && e.target.textContent === "."){
+                secondNum = "-0.";
+                secondNumDisplay.textContent = secondNum;
+            } else if ((firstNum === "" || firstNum === "-") && e.target.textContent === "."){
                 firstNumDisplay.textContent += "0.";
                 firstNum += "0.";
             } else if (operator === ""){
                 firstNumDisplay.textContent += e.target.textContent;
                 firstNum += e.target.textContent;
-            } else if (secondNum === "" && e.target.textContent === "."){
-                secondNumDisplay.textContent += secondNum;
+            } else if ((secondNum === "" ) && e.target.textContent === "."){
                 secondNum += "0.";
+                secondNumDisplay.textContent += secondNum;
             } else {
                 secondNumDisplay.textContent += e.target.textContent;
                 secondNum += e.target.textContent;
@@ -67,6 +71,23 @@ function operate(){
             console.log("operator = " + operator);
         });
     });
+
+    // '+/-' event
+    negative.addEventListener("click", () =>{
+        if(firstNum === "" && (operator && secondNum) === ""){
+            firstNumDisplay.textContent += "-";
+            firstNum += "-";
+        } else if ((firstNum && operator) !== "" && secondNum === "" ){
+            secondNum += "-";
+            secondNumDisplay.textContent += `-`;
+        } else if(firstNum === "-"){
+            firstNumDisplay.textContent = "";
+            firstNum = "";
+        }  else if ((operator && firstNum) !== "" && secondNum === "-"){
+            secondNumDisplay.textContent = "";
+            secondNum = "";
+        } 
+    })
 
     // Operator event
     operatorPad.forEach(pad => {
@@ -136,9 +157,10 @@ function result() {
         secondNumDisplay.textContent = "";
         operatorDisplay.textContent = "";
         firstNumDisplay.textContent = result;  
-        firstNum = result;
+        firstNum = String(result);
+        operator ="";
         secondNum = "";
-        console.log("result = " + result)
+        console.log("result = " + result)     
 }
 
 operate();
