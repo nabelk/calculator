@@ -32,7 +32,7 @@ const negative = document.querySelector(".negative");
 let dot = document.querySelector("#dot");
 
 let firstNumDisplay = document.querySelector(".firstnum");
-let operatorDisplay = document.querySelector(".operator");
+let operatorDisplay = document.querySelector(".operators");
 let secondNumDisplay = document.querySelector(".secondnum");
 let span = document.querySelectorAll("span");
 
@@ -110,8 +110,11 @@ function operate(){
     // Operator event
     operatorPad.forEach(pad => {
         pad.addEventListener("click", () => { 
-            
-            if(firstNum !== "" && operator !== "" && secondNum === ""){
+
+            if(firstNum === "") {
+                firstNumDisplay.textContent = "";
+                operator = "";
+            } else if(firstNum !== "" && operator !== "" && secondNum === ""){
                 operator = pad.getAttribute("data-value");
                 operatorDisplay.textContent = pad.textContent;
             } else if((firstNum, secondNum, operator) !== ""){
@@ -154,6 +157,7 @@ function operate(){
 }
 
 function result() {
+    if((firstNum && operator && secondNum) === "") firstNumDisplay.textContent = "error";
     firstNum = Number(firstNum);
     secondNum = Number(secondNum);
     let result;
@@ -171,14 +175,19 @@ function result() {
             result = divide(firstNum, secondNum);
              break;    
     }
-    console.log(result)
+    result = String(result);
+    if(result.includes(".")){
+        result = Number(result);
+        result = result.toFixed(1);
+        result = String(result);
+    };
+    console.log("result = " + result);
     secondNumDisplay.textContent = "";
     operatorDisplay.textContent = "";
     firstNumDisplay.textContent = result;  
-    firstNum = String(result);
+    firstNum = result;
     operator ="";
     secondNum = "";
-    console.log("result = " + result)     
 }    
 
 operate();
