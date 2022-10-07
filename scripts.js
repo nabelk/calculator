@@ -29,6 +29,7 @@ let clear = document.querySelector(".clear");
 let equal = document.querySelector(".equal");
 let backspace = document.querySelector(".del")
 const negative = document.querySelector(".negative"); 
+let dot = document.querySelector("#dot");
 
 let firstNumDisplay = document.querySelector(".firstnum");
 let operatorDisplay = document.querySelector(".operator");
@@ -50,22 +51,39 @@ function operate(){
     // Number/dot event
     keypad.forEach(pad => {
         pad.addEventListener("click", (e) => {
-            if ((secondNum === "-"  ) && e.target.textContent === "."){
+            
+            if((firstNum && operator) !== "" && secondNum === ""){
+                dot.classList.add = "num" 
+                // Enable dot event for secondNum
+            } 
+
+            if ((secondNum === "" ) && e.target.textContent === "." && (firstNum && operator) !== ""){
+                secondNum += "0.";
+                secondNumDisplay.textContent += secondNum; 
+                 // Statement for clicking dot pad when secondNum is ""
+            } else if(secondNum.includes(".") && e.target.textContent === "."){
+                dot.className = "keypad"; 
+                // Statement for dot to be key in one time only for secondNum
+            } else if((firstNum.includes(".")) && e.target.textContent === "." && (operator && secondNum) === "") {
+                dot.className = "keypad"; 
+                // Statement for dot to be key in one time only for firstNum
+            } else if ((secondNum === "-"  ) && e.target.textContent === "."){
                 secondNum = "-0.";
                 secondNumDisplay.textContent = secondNum;
+                // Statement for clicking dot pad when secondNum is "-"
             } else if ((firstNum === "" || firstNum === "-") && e.target.textContent === "."){
                 firstNumDisplay.textContent += "0.";
                 firstNum += "0.";
+                // Statement for clicking dot pad when firstNum is "" or "-"
             } else if (operator === ""){
                 firstNumDisplay.textContent += e.target.textContent;
                 firstNum += e.target.textContent;
-            } else if ((secondNum === "" ) && e.target.textContent === "."){
-                secondNum += "0.";
-                secondNumDisplay.textContent += secondNum;
+                // Statement for key in firstNum
             } else {
                 secondNumDisplay.textContent += e.target.textContent;
-                secondNum += e.target.textContent;
-            }
+                secondNum += e.target.textContent; 
+                // Statement for key in secondNum
+            }            
             console.log("first = " + firstNum)
             console.log("second = " + secondNum)
             console.log("operator = " + operator);
@@ -137,30 +155,30 @@ function operate(){
 
 function result() {
     firstNum = Number(firstNum);
-        secondNum = Number(secondNum);
-        let result;
-        switch(operator){
-            case "add":
-                result = add(firstNum, secondNum);
-                break;
-            case "subtract":
-                result = subtract(firstNum, secondNum);
-                break;
-            case "multiply":
-                result = multiply(firstNum, secondNum);
-                break;   
-            case "divide":
-                result = divide(firstNum, secondNum);
-                break;    
-        }
-        console.log(result)
-        secondNumDisplay.textContent = "";
-        operatorDisplay.textContent = "";
-        firstNumDisplay.textContent = result;  
-        firstNum = String(result);
-        operator ="";
-        secondNum = "";
-        console.log("result = " + result)     
-}
+    secondNum = Number(secondNum);
+    let result;
+    switch(operator){
+        case "add":
+            result = add(firstNum, secondNum);
+            break;
+        case "subtract":
+            result = subtract(firstNum, secondNum);
+            break;
+        case "multiply":
+            result = multiply(firstNum, secondNum);
+            break;   
+        case "divide":
+            result = divide(firstNum, secondNum);
+             break;    
+    }
+    console.log(result)
+    secondNumDisplay.textContent = "";
+    operatorDisplay.textContent = "";
+    firstNumDisplay.textContent = result;  
+    firstNum = String(result);
+    operator ="";
+    secondNum = "";
+    console.log("result = " + result)     
+}    
 
 operate();
