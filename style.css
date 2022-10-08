@@ -35,15 +35,17 @@ h3 {
     background-color: #ffffff;
     height: 90px;
     width: 296px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    display:flex;
+    justify-content: flex-start;
+    overflow-y: hidden;
+    overflow-x: scroll;
     padding: 20px;
     font-size: 40px;
     gap: 6px;
     border-radius: 5px;
     margin:0px;
     box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;
+    flex-direction:row-reverse
 }
 
 #keypad-container {
