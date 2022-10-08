@@ -152,12 +152,15 @@ function operate(){
 
     // '=' event
     equal.addEventListener("click", () => {
-        result();
+        if(((firstNum && operator && secondNum) === "" )|| ((firstNum && operator) !== "" && secondNum === "")) {
+            firstNumDisplay.textContent = "";
+        } else {
+            result();
+        }
     })
 }
 
 function result() {
-    if((firstNum && operator && secondNum) === "") firstNumDisplay.textContent = "error";
     firstNum = Number(firstNum);
     secondNum = Number(secondNum);
     let result;
@@ -181,13 +184,13 @@ function result() {
         result = result.toFixed(1);
         result = String(result);
     };
-    console.log("result = " + result);
     secondNumDisplay.textContent = "";
     operatorDisplay.textContent = "";
     firstNumDisplay.textContent = result;  
     firstNum = result;
     operator ="";
     secondNum = "";
+    console.log("result = " + result);
 }    
 
 operate();
