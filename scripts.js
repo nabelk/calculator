@@ -22,29 +22,39 @@ let firstNum = "";
 let secondNum = "";
 let operator = "";
 
-let display = document.querySelector(".display");
-let keypad = document.querySelectorAll(".num");
-let operatorPad = document.querySelectorAll(".operator")
-let clear = document.querySelector(".clear");
-let equal = document.querySelector(".equal");
-let backspace = document.querySelector(".del")
+const display = document.querySelector(".display");
+const keypad = document.querySelectorAll(".num");
+const operatorPad = document.querySelectorAll(".operator")
+const clear = document.querySelector(".clear");
+const equal = document.querySelector(".equal");
+const backspace = document.querySelector(".del")
 const negative = document.querySelector(".negative"); 
-let dot = document.querySelector("#dot");
+const dot = document.querySelector("#dot");
 
-let firstNumDisplay = document.querySelector(".firstnum");
-let operatorDisplay = document.querySelector(".operators");
-let secondNumDisplay = document.querySelector(".secondnum");
-let span = document.querySelectorAll("span");
+const firstNumDisplay = document.querySelector(".firstnum");
+const operatorDisplay = document.querySelector(".operators");
+const secondNumDisplay = document.querySelector(".secondnum");
+const span = document.querySelectorAll("span");
 
-// Func. to make calculation based on event
+// Event listener function
 function operate(){
 
     // Clear display div event
     clear.addEventListener("click", clearEvent);
 
+    // DEL div event
+    backspace.addEventListener("click", backspaceEvent);
+
+    // '+/-' div event
+    negative.addEventListener("click", negativeEvent);
+
+    // '=' div event
+    equal.addEventListener("click", result)
+
     // Number/dot div event
     keypad.forEach(pad => {
         pad.addEventListener("click", (e) => {
+            audio(".defaultaudio", 1);
             
             if((firstNum && operator) !== "" && secondNum === ""){
                 dot.classList.add = "num" 
@@ -84,12 +94,10 @@ function operate(){
         });
     });
 
-    // '+/-' div event
-    negative.addEventListener("click", negativeEvent);
-
     // Operator div event
     operatorPad.forEach(pad => {
         pad.addEventListener("click", () => { 
+            audio(".defaultaudio", 1);
 
             if(firstNum === "") {
                 firstNumDisplay.textContent = "";
@@ -112,26 +120,13 @@ function operate(){
         });
     });
 
-    // DEL div event
-    backspace.addEventListener("click", backspaceEvent);
-
-    // '=' div event
-    equal.addEventListener("click", () => {
-        if(((firstNum && operator && secondNum) === "" )|| ((firstNum && operator) !== "" && secondNum === "")) {
-            firstNumDisplay.textContent = "";
-            firstNum = "";
-            operator = "";
-            operatorDisplay.textContent = "";
-        } else {
-            result();
-        }
-    })
-
     // Keyboard Support
     document.addEventListener("keydown", (e) => {
         /* console.log(e.key +":"+ e.keyCode)
         console.log(typeof e.keyCode)
         console.log(typeof e.key) */
+        
+        audio(".defaultaudio", 1);
 
         const numDotKeyCode = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 110]; 
         for(let x = 0; x < numDotKeyCode.length; x++){
@@ -211,14 +206,7 @@ function operate(){
                 backspaceEvent();
                 break;
             case 13:
-                if(((firstNum && operator && secondNum) === "" )|| ((firstNum && operator) !== "" && secondNum === "")) {
-                    firstNumDisplay.textContent = "";
-                    firstNum = "";
-                    operatorDisplay.textContent = "";
-                    operator = "";
-                } else {
-                    result();
-                }
+                result();
                 break;
             case 78:
                 negativeEvent();
@@ -234,6 +222,7 @@ function operate(){
 
 // Clear event handler function
 function clearEvent(){
+    audio(".deleteaudio", 0.3);
     span.forEach(element => element.textContent = "");
     firstNum = "";
     secondNum = "";
@@ -243,6 +232,7 @@ function clearEvent(){
 
 // Backspace event handler function
 function backspaceEvent(){
+    audio(".deleteaudio", 0.3);
     if(operator === "" && secondNum === "" && firstNum !=="" ){
         firstNum = firstNum.slice(0, -1); 
         firstNumDisplay.textContent = firstNum;
@@ -260,6 +250,7 @@ function backspaceEvent(){
 
 // Negative event handler function
 function negativeEvent(){
+    audio(".defaultaudio", 1);
     if(firstNum === "" && (operator && secondNum) === ""){
         firstNumDisplay.textContent += "-";
         firstNum += "-";
@@ -277,36 +268,53 @@ function negativeEvent(){
 
 // Result event handler
 function result() {
-    firstNum = Number(firstNum);
-    secondNum = Number(secondNum);
-    let result;
-    switch(operator){
-        case "add":
-            result = add(firstNum, secondNum);
-            break;
-        case "subtract":
-            result = subtract(firstNum, secondNum);
-            break;
-        case "multiply":
-            result = multiply(firstNum, secondNum);
-            break;   
-        case "divide":
-            result = divide(firstNum, secondNum);
-             break;    
-    }
-    result = String(result);
-    if(result.includes(".")){
-        result = Number(result);
-        result = result.toFixed(1);
+    audio(".defaultaudio", 1);
+    if(((firstNum && operator && secondNum) === "" )|| ((firstNum && operator) !== "" && secondNum === "")) {
+        firstNumDisplay.textContent = "";
+        firstNum = "";
+        operatorDisplay.textContent = "";
+        operator = "";
+    } else {
+        firstNum = Number(firstNum);
+        secondNum = Number(secondNum);
+        let result;
+        switch(operator){
+            case "add":
+                result = add(firstNum, secondNum);
+                break;
+            case "subtract":
+                result = subtract(firstNum, secondNum);
+                break;
+            case "multiply":
+                result = multiply(firstNum, secondNum);
+                break;   
+            case "divide":
+                result = divide(firstNum, secondNum);
+                break;    
+        }
         result = String(result);
-    };
-    secondNumDisplay.textContent = "";
-    operatorDisplay.textContent = "";
-    firstNumDisplay.textContent = result;  
-    firstNum = result;
-    operator ="";
-    secondNum = "";
-    console.log("result = " + result);
+        if(result.includes(".")){
+            result = Number(result);
+            result = result.toFixed(1);
+            result = String(result);
+        };
+        secondNumDisplay.textContent = "";
+        operatorDisplay.textContent = "";
+        firstNumDisplay.textContent = result;  
+        firstNum = result;
+        operator ="";
+        secondNum = "";
+        console.log("result = " + result);
+    }
 }    
+
+// Audio function
+function audio(classchoice, volume){
+    const audio = document.querySelector(classchoice);
+    if (!audio) return;
+    audio.volume = volume;
+    audio.currentTime = 0;
+    audio.play();
+};
 
 operate();
