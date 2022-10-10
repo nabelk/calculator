@@ -34,7 +34,7 @@ const dot = document.querySelector("#dot");
 const firstNumDisplay = document.querySelector(".firstnum");
 const operatorDisplay = document.querySelector(".operators");
 const secondNumDisplay = document.querySelector(".secondnum");
-const span = document.querySelectorAll("span");
+const spanClear = document.querySelectorAll(".span")
 
 // Event listener function
 function operate(){
@@ -49,54 +49,14 @@ function operate(){
     negative.addEventListener("click", negativeEvent);
 
     // '=' div event
-    equal.addEventListener("click", result)
+    equal.addEventListener("click", result);
 
     // Number/dot div event
-    keypad.forEach(pad => {
-        pad.addEventListener("click", (e) => {
-            audio(".defaultaudio", 1);
-            
-            if((firstNum && operator) !== "" && secondNum === ""){
-                dot.classList.add = "num" 
-                // Enable dot event for secondNum
-            } 
-
-            if ((secondNum === "" ) && e.target.textContent === "." && (firstNum && operator) !== ""){
-                secondNum += "0.";
-                secondNumDisplay.textContent += secondNum; 
-                 // Statement for clicking dot pad when secondNum is ""
-            } else if(secondNum.includes(".") && e.target.textContent === "."){
-                dot.className = "keypad"; 
-                // Statement for dot to be key in one time only for secondNum
-            } else if((firstNum.includes(".")) && e.target.textContent === "." && (operator && secondNum) === "") {
-                dot.className = "keypad"; 
-                // Statement for dot to be key in one time only for firstNum
-            } else if ((secondNum === "-"  ) && e.target.textContent === "."){
-                secondNum = "-0.";
-                secondNumDisplay.textContent = secondNum;
-                // Statement for clicking dot pad when secondNum is "-"
-            } else if ((firstNum === "" || firstNum === "-") && e.target.textContent === "."){
-                firstNumDisplay.textContent += "0.";
-                firstNum += "0.";
-                // Statement for clicking dot pad when firstNum is "" or "-"
-            } else if (operator === ""){
-                firstNumDisplay.textContent += e.target.textContent;
-                firstNum += e.target.textContent;
-                // Statement for key in firstNum
-            } else {
-                secondNumDisplay.textContent += e.target.textContent;
-                secondNum += e.target.textContent; 
-                // Statement for key in secondNum
-            }            
-            console.log("first = " + firstNum)
-            console.log("second = " + secondNum)
-            console.log("operator = " + operator);
-        });
-    });
+    keypad.forEach(pad => pad.addEventListener("click", keypadnumdotEvent));
 
     // Operator div event
     operatorPad.forEach(pad => {
-        pad.addEventListener("click", () => { 
+        pad.addEventListener("click", () => {
             audio(".defaultaudio", 1);
 
             if(firstNum === "") {
@@ -117,113 +77,27 @@ function operate(){
             console.log("first = " + firstNum)
             console.log("second = " + secondNum)
             console.log("operator = " + operator);
-        });
+
+        })
     });
 
     // Keyboard Support
     document.addEventListener("keydown", (e) => {
-        /* console.log(e.key +":"+ e.keyCode)
-        console.log(typeof e.keyCode)
-        console.log(typeof e.key) */
-        
-        audio(".defaultaudio", 1);
 
-        const numDotKeyCode = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 110]; 
+        //Number, dot, operator, backspace, clear, equal keycode to click the choosen elements
+        const numDotKeyCode = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 110, 107, 109, 106, 111, 68, 8, 13, 78]; 
         for(let x = 0; x < numDotKeyCode.length; x++){
             if(e.keyCode === numDotKeyCode[x]){
-                if((firstNum && operator) !== "" && secondNum === ""){
-                    dot.classList.add = "num" 
-                    // Enable dot event for secondNum
-                } 
-
-                if ((secondNum === "" ) && e.keyCode === 110 && (firstNum && operator) !== ""){
-                    secondNum += "0.";
-                    secondNumDisplay.textContent += secondNum; 
-                    // Statement for clicking dot pad when secondNum is ""
-                } else if(secondNum.includes(".") && e.keyCode === 110){
-                    dot.className = "keypad"; 
-                    // Statement for dot to be key in one time only for secondNum
-                } else if((firstNum.includes(".")) && e.keyCode === 110 && (operator && secondNum) === "") {
-                    dot.className = "keypad"; 
-                    // Statement for dot to be key in one time only for firstNum
-                } else if ((secondNum === "-"  ) && e.keyCode === 110){
-                    secondNum = "-0.";
-                    secondNumDisplay.textContent = secondNum;
-                    // Statement for clicking dot pad when secondNum is "-"
-                } else if ((firstNum === "" || firstNum === "-") && e.keyCode === 110){
-                    firstNumDisplay.textContent += "0.";
-                    firstNum += "0.";
-                    // Statement for clicking dot pad when firstNum is "" or "-"
-                } else if (operator === ""){
-                    firstNumDisplay.textContent += e.key;
-                    firstNum += e.key;
-                    // Statement for key in firstNum
-                } else {
-                    secondNumDisplay.textContent += e.key;
-                    secondNum += e.key;
-                    // Statement for key in secondNum
-                } 
+                document.querySelector(`[data-key="${e.keyCode}"]`).click()
             }
         }
-
-        let operatorKeyCode = [107, 109, 106, 111];
-        for(let i = 0; i < operatorKeyCode.length; i++){
-            switch(e.key){
-                case "+":
-                    operator = "add";
-                    break;
-                case "-":
-                    operator = "subtract";
-                    break; 
-                case "*":
-                    operator = "multiply";
-                    break;
-                case "/":
-                    operator = "divide";
-                    break;   
-            }
-
-            if(e.keyCode === operatorKeyCode[i]){
-                if(firstNum === "") {
-                    firstNumDisplay.textContent = "";
-                    operator = "";
-                } else if(firstNum !== "" && operator !== "" && secondNum === ""){
-                    operatorDisplay.textContent = e.key;
-                } else if((firstNum, secondNum, operator) !== ""){
-                    result();
-                    operatorDisplay.textContent = e.key;
-                } else {
-                    operatorDisplay.textContent = e.key;
-                }
-            }
-        }
-
-        switch(e.keyCode){
-            case 46:
-                clearEvent();
-                break;
-            case 8:
-                backspaceEvent();
-                break;
-            case 13:
-                result();
-                break;
-            case 78:
-                negativeEvent();
-                break;   
-        }
-
-        console.log("first = " + firstNum)
-        console.log("second = " + secondNum)
-        console.log("operator = " + operator);
-    });
-
+    })
 };
 
 // Clear event handler function
 function clearEvent(){
     audio(".deleteaudio", 0.3);
-    span.forEach(element => element.textContent = "");
+    spanClear.forEach(element => element.textContent = "");
     firstNum = "";
     secondNum = "";
     operator = "";
@@ -248,6 +122,49 @@ function backspaceEvent(){
     console.log("operator = " + operator);
 };
 
+// Num and dot event handler funvtion
+function keypadnumdotEvent(e){
+
+    audio(".defaultaudio", 1);
+            
+    if((firstNum && operator) !== "" && secondNum === ""){
+        dot.classList.add = "num" 
+        // Enable dot event for secondNum
+    } 
+
+    if ((secondNum === "" ) && e.target.textContent === "." && (firstNum && operator) !== ""){
+        secondNum += "0.";
+        secondNumDisplay.textContent += secondNum; 
+            // Statement for clicking dot pad when secondNum is ""
+    } else if(secondNum.includes(".") && e.target.textContent === "."){
+        dot.className = "keypad"; 
+        // Statement for dot to be key in one time only for secondNum
+    } else if((firstNum.includes(".")) && e.target.textContent === "." && (operator && secondNum) === "") {
+        dot.className = "keypad"; 
+        // Statement for dot to be key in one time only for firstNum
+    } else if ((secondNum === "-"  ) && e.target.textContent === "."){
+        secondNum = "-0.";
+        secondNumDisplay.textContent = secondNum;
+        // Statement for clicking dot pad when secondNum is "-"
+    } else if ((firstNum === "" || firstNum === "-") && e.target.textContent === "."){
+        firstNumDisplay.textContent += "0.";
+        firstNum += "0.";
+        // Statement for clicking dot pad when firstNum is "" or "-"
+    } else if (operator === ""){
+        firstNumDisplay.textContent += e.target.textContent;
+        firstNum += e.target.textContent;
+        // Statement for key in firstNum
+    } else {
+        secondNumDisplay.textContent += e.target.textContent;
+        secondNum += e.target.textContent; 
+        // Statement for key in secondNum
+    }            
+    console.log("first = " + firstNum)
+    console.log("second = " + secondNum)
+    console.log("operator = " + operator);
+
+};
+
 // Negative event handler function
 function negativeEvent(){
     audio(".defaultaudio", 1);
@@ -266,7 +183,7 @@ function negativeEvent(){
     } 
 };
 
-// Result event handler
+// Result event handler function
 function result() {
     audio(".defaultaudio", 1);
     if(((firstNum && operator && secondNum) === "" )|| ((firstNum && operator) !== "" && secondNum === "")) {
@@ -295,7 +212,7 @@ function result() {
         result = String(result);
         if(result.includes(".")){
             result = Number(result);
-            result = result.toFixed(1);
+            result = result.toFixed(2);
             result = String(result);
         };
         secondNumDisplay.textContent = "";
@@ -306,7 +223,7 @@ function result() {
         secondNum = "";
         console.log("result = " + result);
     }
-}    
+};
 
 // Audio function
 function audio(classchoice, volume){
