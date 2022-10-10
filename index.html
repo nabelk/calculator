@@ -8,38 +8,60 @@
     </head>
 
     <body>
+        <header><span>CALCULATOR</span></header>
         <h3>Get your numbers calculated</h3>
         <div id="calculator">
             <div class="display">
-                <span class="secondnum"></span><span class="operators"></span><span class="firstnum"></span>
+                <span class="secondnum span"></span><span class="operators span"></span><span class="firstnum span"></span>
             </div>
             <div id="keypad-container">
                 <div id="first-keypad-section">
-                    <div class="keypad clear">C</div>
-                    <div class="keypad del">DEL</div>
-                    <div class="keypad negative">+/-</div>
-                    <div class="keypad operator" data-value="divide">/</div>
-                    <div class="keypad num">7</div>
-                    <div class="keypad num">8</div>
-                    <div class="keypad num">9</div>
-                    <div class="keypad operator" data-value="multiply">*</div>
-                    <div class="keypad num">4</div>
-                    <div class="keypad num">5</div>
-                    <div class="keypad num">6</div>
-                    <div class="keypad operator" data-value="subtract">-</div>
-                    <div class="keypad num">1</div>
-                    <div class="keypad num">2</div>
-                    <div class="keypad num">3</div>
-                    <div class="keypad operator" data-value="add">+</div>
+                    <div class="keypad clear" data-key="68">C</div>
+                    <div class="keypad del" data-key="8">DEL</div>
+                    <div class="keypad negative" data-key="78">+/-</div>
+                    <div class="keypad operator" data-key="111" data-value="divide">/</div>
+                    <div class="keypad num" data-key="55">7</div>
+                    <div class="keypad num" data-key="56">8</div>
+                    <div class="keypad num" data-key="57">9</div>
+                    <div class="keypad operator" data-key="106" data-value="multiply">*</div>
+                    <div class="keypad num" data-key="52">4</div>
+                    <div class="keypad num" data-key="53">5</div>
+                    <div class="keypad num" data-key="54">6</div>
+                    <div class="keypad operator" data-key="109" data-value="subtract">-</div>
+                    <div class="keypad num" data-key="49">1</div>
+                    <div class="keypad num" data-key="50">2</div>
+                    <div class="keypad num" data-key="51">3</div>
+                    <div class="keypad operator" data-key="107" data-value="add">+</div>
                 </div>
                 <div id="last-row-keypad">
-                    <div id="dot" class="keypad num">.</div>
-                    <div class="keypad num">0</div>
-                    <div class="keypad equal">=</div>
+                    <div id="dot" class="keypad num" data-key="110">.</div>
+                    <div class="keypad num" data-key="48">0</div>
+                    <div class="keypad equal" data-key="13">=</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="popup1" class="overlay">
+            <div class="popup">
+                <h2>Help</h2>
+                <a class="close" href="#">&times;</a>
+                <div class="content">
+                    <h4>Keyboard Support</h4>
+                    <ul>
+                        <li>Numbers and operators work best with numpad</li>
+                        <li>Press "<strong>Backspace</strong>" key to delete single character</li>
+                        <li>Press "<strong>N</strong>" key to add negative</li>
+                        <li>Press "<strong>Enter</strong>" key for the result</li>
+                        <li>Press "<strong>D</strong>" key to clear the display</li>
+                    </ul>
+                    <h4>Other</h4>
+                    <ul><li>Negative can only be declare before numbers</li></ul>
                 </div>
             </div>
         </div>
         
+        <footer><a class="help" href="#popup1">Help</a><div class="footerspan">© Copyright 2022. Powered by</div><a href="https://github.com/nabelk"><img class="img" src="img/github-logo.png" alt="github-logo"></a></footer>
+
         <audio class="defaultaudio" src="audio/default-typing.wav"></audio>
         <audio class="deleteaudio" src="audio/delete-clear.mp3"></audio>
         
