@@ -13,8 +13,8 @@
 ## General Information
 - This project is a part of The Odin Project:Foundations course.
 - This calculator supports basic operators, clear display, delete single character, adding negative numbers & decimal numbers.
-- It intend to solve an operation when a user clicks their choosen input.
-- To take on this project is for testing my logic, understanding and integration between HTML, CSS & Javascript.
+- It intends to solve an operation when a user clicks their choosen input.
+- To take on this project is for testing my logic and understanding the integration between HTML, CSS & Javascript.
 
 ## Technologies Used
 - HTML
@@ -22,7 +22,6 @@
 - Javascript & Vanilla js
 
 ## Features
-List the ready features here:
 - Keyboard Support
 - Sound Effects
 
