@@ -115,6 +115,7 @@ footer, header {
     opacity: 0.8;
     font-family: monospace;
     font-weight:500;
+    gap: 10px;
 }
 
 header {
@@ -130,12 +131,7 @@ header {
     width: auto;
 }
 
-footer {
-    padding-right: 32%;
-}
-
 .help {
-    margin-right: 30%;
     cursor: pointer;
     font-weight: bold;
 }
@@ -187,4 +183,44 @@ color: red;
 .popup .content {
 max-height: 30%;
 overflow: auto;
+}
+
+@media only screen and (max-device-width: 480px) {
+
+    
+    h3 {
+        margin-top: 20%;
+        margin-bottom: 15%;
+        font-size: 65px;
+    }
+
+    #calculator {
+        width: 90%;
+        height: 100%;
+    }
+
+    .display {
+        width:95%;
+        align-items: center;
+    }
+
+    #keypad-container {
+        width: 100%;
+    }
+
+    #first-keypad-section {
+        width:100%;
+    }
+
+    #last-row-keypad {
+        width:100%;
+    }
+    
+    .keypad {
+        height: 86px;
+    }
+
+    footer, header {
+        font-size: 30px;
+    }
 }
